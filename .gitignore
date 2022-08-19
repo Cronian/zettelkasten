@@ -26,3 +26,4 @@ hs_err_pid*
 /frontend.iml
 /frontend/node_modules/**
 /api/.gradle/
+/api/build/
