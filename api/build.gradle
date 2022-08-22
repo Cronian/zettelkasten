@@ -4,6 +4,8 @@ plugins {
 	id 'java'
 }
 
+apply from: "react.gradle"
+
 group = 'module.be'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -22,52 +24,4 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-// 아래는 react 빌드를 위한 task와 설정임
-
-// BootRun시에 자동으로 리액트 프로젝트가 빌드 후 스프링 부트 프로젝트 내부로 이동하도록 처리
-tasks.bootRun.dependsOn "copyReactBuildFiles"
-
-// Frontend 폴더 위치
-def frontendDir = "$projectDir/../frontend"
-
-sourceSets {
-	main {
-		resources { srcDirs = ["$projectDir/src/main/resources"]
-		}
-	}
-}
-
-processResources { dependsOn "copyReactBuildFiles" }
-
-// 기존에 배치한 파일 삭제
-task deleteExReactSource() {
-	delete "$projectDir/src/main/resources/static"
-}
-
-// yarn을 통해 빌드 전 인스톨
-task installReact(type: Exec) {
-	dependsOn "deleteExReactSource"
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
-	group = BasePlugin.BUILD_GROUP
-	commandLine 'yarn', 'install'
-
-}
-
-// yarn을 통한 빌드
-task buildReact(type: Exec) {
-	dependsOn "installReact"
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
-	group = BasePlugin.BUILD_GROUP
-	commandLine "yarn", "build"
-}
-
-// 빌드된 파일 이동
-task copyReactBuildFiles(type: Copy) {
-	dependsOn "buildReact"
-	from "$frontendDir/build"
-	into "$projectDir/src/main/resources/static"
 }
