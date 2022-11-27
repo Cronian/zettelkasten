@@ -1,36 +1,69 @@
-import logo from './logo.svg';
-import './App.css';
-import React, {useEffect, useState} from "react";
-import axios from 'axios';
+import {useState, useRef, useCallback, useReducer} from "react";
+import MemoTemplate from "./components/MemoTemplate";
+import MemoInsert from "./components/MemoInsert";
+import MemoList from "./components/MemoList";
 
-function App() {
-  const [hello, setHello] = useState('')
+function createBulkMemos() {
+  const array = [];
+  for (let i = 1; i <= 8 ; i++) {
+    array.push({
+      id: i,
+      text: `메모 ${i}`,
+      checked: false,
+    });
+  }
+  return array;
+}
 
-  useEffect(() => {
-    axios.get('/api/hello')
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
-  }, []);
+function memoReducer(memos, action) {
+  switch (action.type) {
+    case 'INSERT':
+      return memos.concat(action.memo);
+    case 'REMOVE':
+      return memos.filter(memo => memo.id !== action.id);
+    case 'TOGGLE':
+      return memos.map(memo =>
+          memo.id === action.id ? { ...memo, checked: !memo.checked } : memo,
+      );
+    default:
+      return memos;
+  }
+}
+
+const App = () => {
+  const [memos, dispatch] = useReducer(memoReducer, undefined, createBulkMemos);
+
+  const onRemove = useCallback(
+      id => {
+        dispatch({ type: 'REMOVE', id})
+      },[]
+  );
+  const onToggle = useCallback(
+      id => {
+        dispatch({ type: 'TOGGLE', id})
+      },[]
+  );
+
+  const nextId = useRef(2501);
+
+  const onInsert = useCallback(
+      text => {
+        const memo = {
+          id: nextId.current,
+          text,
+          checked: false,
+        };
+        dispatch({ type: 'INSERT', memo});
+        nextId.current += 1;
+      }, []
+  )
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p> Backend Send Message : {hello} </p>
-      </header>
-    </div>
+      <MemoTemplate>
+        <MemoInsert onInsert={onInsert} />
+        <MemoList memos={memos} onRemove={onRemove} onToggle={onToggle} />
+      </MemoTemplate>
   );
-}
+};
 
 export default App;

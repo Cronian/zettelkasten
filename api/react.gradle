@@ -35,6 +35,7 @@ task installReact(type: Exec) {
 task buildReact(type: Exec) {
     println("Yarn으로 React Build")
     dependsOn "installReact"
+    println("$frontendDir");
     workingDir "$frontendDir"
     inputs.dir "$frontendDir"
     group = BasePlugin.BUILD_GROUP
