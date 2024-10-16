@@ -28,7 +28,7 @@ task installReact(type: Exec) {
     workingDir "$frontendDir"
     inputs.dir "$frontendDir"
     group = BasePlugin.BUILD_GROUP
-    commandLine 'yarn', 'install'
+    commandLine "powershell", "-c", "yarn", "install"
 }
 
 // yarn을 통한 빌드
@@ -38,7 +38,7 @@ task buildReact(type: Exec) {
     workingDir "$frontendDir"
     inputs.dir "$frontendDir"
     group = BasePlugin.BUILD_GROUP
-    commandLine "yarn", "build"
+    commandLine "powershell", "-c", "yarn", "build"
 }
 
 // 빌드된 파일 이동
