@@ -2,7 +2,6 @@ package module.be.api.category.entity;
 
 import jakarta.persistence.*;
 import module.be.api.common.entity.BaseVo;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 public class CategoryVo extends BaseVo {

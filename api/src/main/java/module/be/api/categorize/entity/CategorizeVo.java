@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import module.be.api.category.entity.CategoryVo;
 import module.be.api.common.entity.BaseVo;
 import module.be.api.memo.entity.MemoVo;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 public class CategorizeVo extends BaseVo {
