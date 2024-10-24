@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
 
 // App 컴포넌트
 function App() {
@@ -7,6 +8,12 @@ function App() {
   const addMemo = (memoText) => {
     setMemos([...memos, { text: memoText, id: Date.now() }]);
   };
+
+    useEffect(() => {
+        axios.get('/api/memo/list')
+            .then(response => console.log(response.data))
+            .catch(error => console.log(error))
+    }, []);
 
   return (
       <div className="app">
