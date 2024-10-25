@@ -9,11 +9,6 @@ function App() {
     setMemos([...memos, { text: memoText, id: Date.now() }]);
   };
 
-    useEffect(() => {
-        axios.get('/api/memo/list')
-            .then(response => console.log(response.data))
-            .catch(error => console.log(error))
-    }, []);
 
   return (
       <div className="app">
@@ -23,16 +18,26 @@ function App() {
       </div>
   );
 }
-/*
-function App() {
-  const [hello, setHello] = useState('')
 
-  useEffect(() => {
-    axios.get('/api/hello')
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
-  }, []);
- */
+// MemoList DB에서 꺼내오기
+function GetMemoList() {
+
+    const [memoList, setMemoList] = useState([]);
+
+    // DB에 저장된 api list를 가져온다.
+    useEffect(() => {
+        axios.get('/api/memo/list')
+            .then(response => setMemoList(response.data))
+            .catch(error => console.log(error))
+    }, []);
+
+    return (
+        memoList.forEach(item => {
+           console.log(item);
+        })
+    );
+}
+
 
 // Header 컴포넌트
 function Header() {
