@@ -20,6 +20,7 @@ function App() {
 }
 
 // MemoList DB에서 꺼내오기
+// 수정중
 function GetMemoList() {
 
     const [memoList, setMemoList] = useState([]);
