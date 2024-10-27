@@ -5,6 +5,13 @@ import axios from "axios";
 function App() {
   const [memos, setMemos] = useState([]);
 
+    // DB에 저장된 api list를 가져온다.
+    useEffect(() => {
+        axios.get('/api/memo/list')
+            .then(response => setMemoList(response.data))
+            .catch(error => console.log(error))
+    }, []);
+
   const addMemo = (memoText) => {
     setMemos([...memos, { text: memoText, id: Date.now() }]);
   };
@@ -17,26 +24,6 @@ function App() {
         <MemoList memos={memos} />
       </div>
   );
-}
-
-// MemoList DB에서 꺼내오기
-// 수정중
-function GetMemoList() {
-
-    const [memoList, setMemoList] = useState([]);
-
-    // DB에 저장된 api list를 가져온다.
-    useEffect(() => {
-        axios.get('/api/memo/list')
-            .then(response => setMemoList(response.data))
-            .catch(error => console.log(error))
-    }, []);
-
-    return (
-        memoList.forEach(item => {
-           console.log(item);
-        })
-    );
 }
 
 
