@@ -8,7 +8,7 @@ function App() {
     // DB에 저장된 api list를 가져온다.
     useEffect(() => {
         axios.get('/api/memo/list')
-            .then(response => setMemoList(response.data))
+            .then(response => setMemos(response.data))
             .catch(error => console.log(error))
     }, []);
 
