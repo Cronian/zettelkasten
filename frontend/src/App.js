@@ -8,7 +8,10 @@ function App() {
     // DB에 저장된 api list를 가져온다.
     useEffect(() => {
         axios.get('/api/memo/list')
-            .then(response => setMemos(response.data))
+            .then(response => {
+                setMemos(response.data);
+                console.log(response.data);
+            })
             .catch(error => console.log(error))
     }, []);
 
@@ -62,7 +65,7 @@ function MemoList({ memos }) {
   return (
       <ul>
         {memos.map((memo) => (
-            <li key={memo.id}>{memo.text}</li>
+            <li key={memo.title}>{memo.text}</li>
         ))}
       </ul>
   );

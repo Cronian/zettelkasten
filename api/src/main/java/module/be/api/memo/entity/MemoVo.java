@@ -1,10 +1,12 @@
 package module.be.api.memo.entity;
 
 import jakarta.persistence.*;
+import lombok.ToString;
 import module.be.api.common.entity.BaseVo;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
+@ToString
 public class MemoVo extends BaseVo {
     @Id
     @Column(name = "memo_seq")
