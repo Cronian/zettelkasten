@@ -1,13 +1,16 @@
 package module.be.api.memo.entity;
 
 import jakarta.persistence.*;
-import lombok.ToString;
-import module.be.api.common.entity.BaseVo;
+import lombok.*;
+import module.be.api.common.entity.BaseEntity;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @ToString
-public class MemoVo extends BaseVo {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "memo")
+public class Memo extends BaseEntity {
     @Id
     @Column(name = "memo_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,4 +24,11 @@ public class MemoVo extends BaseVo {
 
     @ColumnDefault("1")
     private short rank;
+
+    @Builder
+    public Memo(String title, String text, short rank) {
+        this.title = title;
+        this.text = text;
+        this.rank = rank;
+    }
 }

@@ -5,7 +5,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
 
-public class BaseVo {
+public class BaseEntity {
     @CreatedDate
     private Timestamp crt_dt;
     @LastModifiedDate

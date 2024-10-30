@@ -6,14 +6,21 @@ function App() {
   const [memos, setMemos] = useState([]);
 
     // DB에 저장된 api list를 가져온다.
-    useEffect(() => {
-        axios.get('/api/memo/list')
-            .then(response => {
-                setMemos(response.data);
-                console.log(response.data);
-            })
-            .catch(error => console.log(error))
-    }, []);
+    useEffect( () => {
+        async function getMemoList() {
+            await axios.get('/api/memo/list',{headers: {
+                'Accept': 'application/json'
+            }})
+                .then(res => {
+                    setMemos(res.data);
+                    console.log(res.data);
+                    console.log(res);
+                })
+                .catch(error => console.log(error))
+        }
+        getMemoList()
+        }
+        , []);
 
   const addMemo = (memoText) => {
     setMemos([...memos, { text: memoText, id: Date.now() }]);
