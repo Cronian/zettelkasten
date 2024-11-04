@@ -23,4 +23,8 @@ public class MemoService {
                 .collect(Collectors.toList());
     }
 
+    public Memo save(MemoDto dto) {
+        return memoRepository.save(dto.buildMemo(dto));
+    }
+
 }

@@ -7,8 +7,7 @@ function App() {
 
     // DB에 저장된 api list를 가져온다.
     useEffect( () => {
-        async function getMemoList() {
-            await axios.get('/api/memo/list',{headers: {
+            axios.get('/api/memo/list',{headers: {
                 'Accept': 'application/json'
             }})
                 .then(res => {
@@ -18,12 +17,15 @@ function App() {
                 })
                 .catch(error => console.log(error))
         }
-        getMemoList()
-        }
         , []);
 
   const addMemo = (memoText) => {
-    setMemos([...memos, { text: memoText, id: Date.now() }]);
+              axios.put('/api/memo/save',{text : memoText, title : Date.now()},{headers: {
+                      'Accept': 'application/json'
+                  }})
+                  .catch(error => console.log(error))
+
+    setMemos([...memos, { text: memoText, title: Date.now() }]);
   };
 
 

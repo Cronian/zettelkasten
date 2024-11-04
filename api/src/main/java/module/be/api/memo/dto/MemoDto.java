@@ -20,4 +20,11 @@ public class MemoDto {
         this.text = memo.getText();
         this.rank = memo.getRank();
     }
+
+    @Builder
+    public Memo buildMemo(MemoDto memoDto) {
+        return Memo.builder().title(memoDto.getTitle())
+                .text(memoDto.getText())
+                .build();
+    }
 }
